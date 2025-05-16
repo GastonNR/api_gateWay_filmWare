@@ -1,13 +1,19 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const proxyRoutes = require('./routes/proxyRoutes');
-const cors = require('cors');
 
-app.use(express.json());
+// Rutas
+const loginRoutes = require('./routes/login.routes');
+const gestionarPelisRoutes = require('./routes/gestionar_pelis.routes');
+const buscarPeliRoutes = require('./routes/buscar_peli.routes');
+const pagosRoutes = require('./routes/pagos.routes');
 
-//Agregar las rutas al proxy
-proxyRoutes(app);
+//Rutas para cada microservicio
+app.use('login_registro', loginRoutes);
+app.use('/gestionar_peliculas', gestionarPelisRoutes);
+app.use('/buscar_peliculas', buscarPeliRoutes);
+app.use('/pagos', pagosRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
